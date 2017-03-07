@@ -19,7 +19,7 @@ list of attributes can be found at
     <input name="q"> <!-- defines an input field with name q -->
     <input type="submit"> <!-- defines button to submit the form -->
 </form>
-
+```
 
 ## Google App Engine
 [](https://cloud.google.com/appengine/)
@@ -36,6 +36,11 @@ class MainPage(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([('/', MainPage)], debug=True)
 ```
+
+In the section on the bottom, an URL in this case `/` is mapped to a handler called MainPage, that in
+turn is defined in the class MainPage. It inherits from `webapp2.RequestHandler`, which is the generic request handler from Google.
+
+
 
 
 
