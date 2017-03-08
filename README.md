@@ -25,7 +25,7 @@ list of attributes can be found at
 [](https://cloud.google.com/appengine/)
 
 The Google Cloud Platform
-[provides](https://github.com/GoogleCloudPlatform/python-docs-samples/tree/master/appengine/standard/hello_world) the hello world example. In it the main python file `(./main.py)` contains two sections.
+[provides](https://github.com/GoogleCloudPlatform/python-docs-samples/tree/master/appengine/standard/hello_world) the hello world example. In it the main python file `(./hello_world/main.py)` contains two sections.
 
 ```python
 import webapp2
@@ -38,9 +38,12 @@ app = webapp2.WSGIApplication([('/', MainPage)], debug=True)
 ```
 
 In the section on the bottom, an URL in this case `/` is mapped to a handler called MainPage, that in
-turn is defined in the class MainPage. It inherits from `webapp2.RequestHandler`, which is the generic request handler from Google.
-
-
+turn is defined in the class MainPage. It inherits from `webapp2.RequestHandler`, which is the generic request handler from Google. The class is a function valled `get`, which takes a parameter
+called self. This function does two things. First, it takes `self.response`, which is the global
+response object and sets a header. It sets the content-type header to `text/plain`. By default, the
+content type is `text/html`. In the next statement, it writes the string `Hello World`. Google App
+Engine can be started through the commandline with `dev_appserver.py hello_world`. `localhost:8080`
+serves the app that shows `Hello World!` when opened in a browser.
 
 
 
