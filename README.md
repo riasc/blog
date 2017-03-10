@@ -43,7 +43,7 @@ called self. This function does two things. First, it takes `self.response`, whi
 response object and sets a header. It sets the content-type header to `text/plain`. By default, the
 content type is `text/html`. In the next statement, it writes the string `Hello World`. Google App
 Engine can be started through the commandline with `dev_appserver.py hello_world`. `localhost:8080`
-serves the app that shows `Hello World!` when opened in a browser.
+serves the live web application that shows `Hello World!` when opened in a browser.
 
 
 
