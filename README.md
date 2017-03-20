@@ -49,9 +49,18 @@ serves the live web application that shows `Hello World!` when opened in a brows
 
 Writing the self-request itself reveals more information about the HTTP request.
 
-        self.response.headers['Content-Type'] = 'text/plain'
-	self.response.out.write(self.request)
-app = webapp2.WSGIApplication([('/', MainPage)], debug=True)
 ```
-
-This resul
+self.response.headers['Content-Type'] = 'text/plain'
+self.response.out.write(self.request)
+```
+```
+GET /testform?q=asdasd HTTP/1.1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4
+Content-Type: ; charset="utf-8"
+Host: localhost:8080
+Referer: http://localhost:8080/
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36
+X-Appengine-Country: ZZ
+```
