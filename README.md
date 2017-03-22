@@ -45,16 +45,18 @@ called self. This function does two things. First, it takes `self.response`, whi
 response object and sets a header. It sets the content-type header to `text/plain`. By default, the
 content type is `text/html`. In the next statement, it writes the string `Hello World`. Google App
 Engine can be started through the commandline with `dev_appserver.py hello_world`. `localhost:8080`
-serves the live web application that shows `Hello World!` when opened in a browser.
-
-Writing the self-request itself reveals more information about the HTTP request.
+serves the live web application that shows `Hello World!` when opened in a browser. Setting the header
+as plain text and writing out the self-request itself reveals the header of the HTTP request, that is 
+helpful for telling the server where the request came from. On a sitenote,  `Referer` is spelled wrong 
+(e.g., Referrer) as it was in the original HTTP specification. But it's lived on for backwards compability
+reasons.
 
 ```
 self.response.headers['Content-Type'] = 'text/plain'
 self.response.out.write(self.request)
 ```
 ```
-GET /testform?q=asdasd HTTP/1.1
+GET /testform?q=Hello+World HTTP/1.1
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
 Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4
 Content-Type: ; charset="utf-8"
@@ -64,3 +66,4 @@ Upgrade-Insecure-Requests: 1
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36
 X-Appengine-Country: ZZ
 ```
+
