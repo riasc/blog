@@ -21,6 +21,22 @@ list of attributes can be found at
 </form>
 ```
 
+## Methods - GET and POST
+`GET` and `POST` are two different methods for HTTP requests. The `GET` method sends the encoded
+user information appended to the page request (separated by the character `&`). The `POST` method
+transfer information via HTTP headers. Methods are specified in the form with the attribute `method`.
+If the method is not specified it defaults to `GET`.
+```
+<form method="post" action="./testform"></form>
+<form method="get" action="./testform"></form>
+```
+### Differences (GET vs. POST)
+* parameters in URL (`GET`) vs. parameters in body (`POST`)
+* used for fetching documents (`GET`) vs. used for updating data (`POST`)
+* maximum URL length (`GET) vs. no maximum length (`POST`)
+* parameters can be cached (`GET`) vs. parameters are almost never cached (`POST`)
+* shouldn't change the server (`GET`) vs. can change the server (`POST`)
+
 ## Google App Engine
 [](https://cloud.google.com/appengine/)
 
