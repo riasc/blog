@@ -13,6 +13,8 @@ list of attributes can be found at
 [w3schools](https://www.w3schools.com/tags/tag_input.asp).
 
 * `name` attribute specifies the name of the input element.
+* `type` attribute specifies the type of the input element.
+* `value` attribute specifies the value of the input element.
 
 ```html
 <form action="http://www.google.com/search">
