@@ -39,6 +39,8 @@ If the method is not specified it defaults to `GET`.
 * parameters can be cached (`GET`) vs. parameters are almost never cached (`POST`)
 * shouldn't change the server (`GET`) vs. can change the server (`POST`)
 
+## Validation
+
 ## Google App Engine
 [](https://cloud.google.com/appengine/)
 
