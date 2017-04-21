@@ -1,21 +1,22 @@
 import webapp2
 
 form = """
-<form method="post" action="/testform">
-    <input name="q">
+<form method="post">
+    What is your birthday?
+    <label>
+        <input type="text" name="month"> 
+    </label>
+    <input type="text" name="day">
+    <input type="text" name="year">
+    <br>
+    <br>
     <input type="submit">
 </form>
 """
 
 class MainPage(webapp2.RequestHandler):
-    def get(self):
+    def post(self):
         self.response.out.write(form)
 
-class TestHandler(webapp2.RequestHandler):
-    def post(self):
-        q = self.request.get("q")
-        self.response.out.write(q)
-
-app = webapp2.WSGIApplication([('/', MainPage),
-                                ('/testform', TestHandler)], 
+app = webapp2.WSGIApplication([('/', MainPage)], 
                                 debug=True)
