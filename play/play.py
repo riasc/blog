@@ -14,6 +14,21 @@ form = """
 </form>
 """
 
+months = ["January",
+        "February",
+        "March",
+        "April",
+        "Mai",
+        "June",
+        "July",
+        "August",
+        "September",
+        "Oktober",
+        "November",
+        "December"]
+
+
+
 class MainPage(webapp2.RequestHandler):
     def get(self):
         self.response.out.write(form)
