@@ -27,7 +27,9 @@ months = ["January",
         "November",
         "December"]
 
-
+def valid_month(month):
+    if(month):
+        short_month = month
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
