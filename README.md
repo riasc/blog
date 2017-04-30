@@ -40,6 +40,77 @@ If the method is not specified it defaults to `GET`.
 * shouldn't change the server (`GET`) vs. can change the server (`POST`)
 
 ## Validation
+Validation for user input (e.g., date - day, month, year). 
+Validate the day:
+```python
+
+def valid_day(day):
+    if(day and day.isdigit()):
+        day = int(day)
+        if(day >= 1 and day <= 31):
+            return day
+
+#print valid_day('0') 
+# => None    
+#print valid_day('1') 
+# => 1
+#print valid_day('15') 
+# => 15
+#print valid_day('500') 
+# => None
+```
+
+Validate the month:
+```python
+months = ['January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December']
+
+month_abbrv = dict((m[:3].lower(),m) for m in months)
+def valid_month(month):
+    if(month):
+        short_month = month[:3].lower()
+        return month_abbrv.get(short_month)
+
+#print valid_month("january") 
+#=> "January"    
+#print valid_month("January") 
+#=> "January"
+#print valid_month("foo")
+#=> None
+#print valid_month("")
+#=> None
+```
+
+Validate the year:
+```python
+def valid_year(year):
+    if(year and year.isdigit()):
+        year = int(year)
+        if(year >= 1900 and year <= 2020):
+            return year
+
+#print valid_year('0') 
+#=> None    
+#print valid_year('-11') 
+#=> None
+#print valid_year('1950') 
+#=> 1950
+#print valid_year('2000') 
+#=> 2000
+```
+
+
+
 
 ## Google App Engine
 [](https://cloud.google.com/appengine/)
