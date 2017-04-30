@@ -40,8 +40,18 @@ If the method is not specified it defaults to `GET`.
 * shouldn't change the server (`GET`) vs. can change the server (`POST`)
 
 ## Validation
-Validation for user input (e.g., date - day, month, year). 
-Validate the day:
+Validation for user input from a form (e.g., date - day, month, year). At first, the user makes
+a request for the form to the server - this is a `GET` request. Afterwards, the server responds
+with the form data. Finally, the user will make a `POST` request to the server with the data. 
+The server will run some validation functions. If the data is good, the server will say: "thanks". 
+However, if the data is bad, the server is going to respond with the form data again and the server
+will also include an error message telling user to reenter their values.
+1. verify the user's input
+2. on error, render form again
+3. include error message
+
+### Functions
+#### day
 ```python
 
 def valid_day(day):
