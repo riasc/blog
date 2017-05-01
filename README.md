@@ -39,89 +39,6 @@ If the method is not specified it defaults to `GET`.
 * parameters can be cached (`GET`) vs. parameters are almost never cached (`POST`)
 * shouldn't change the server (`GET`) vs. can change the server (`POST`)
 
-## Validation
-Validation for user input from a form (e.g., date - day, month, year). At first, the user makes
-a request for the form to the server - this is a `GET` request. Afterwards, the server responds
-with the form data. Finally, the user will make a `POST` request to the server with the data. 
-The server will run some validation functions. If the data is good, the server will say: "thanks". 
-However, if the data is bad, the server is going to respond with the form data again and the server
-will also include an error message telling user to reenter their values.
-1. verify the user's input
-2. on error, render form again
-3. include error message
-
-### Functions
-#### day
-```python
-
-def valid_day(day):
-    if(day and day.isdigit()):
-        day = int(day)
-        if(day >= 1 and day <= 31):
-            return day
-
-#print valid_day('0') 
-# => None    
-#print valid_day('1') 
-# => 1
-#print valid_day('15') 
-# => 15
-#print valid_day('500') 
-# => None
-```
-
-Validate the month:
-```python
-months = ['January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July',
-          'August',
-          'September',
-          'October',
-          'November',
-          'December']
-
-month_abbrv = dict((m[:3].lower(),m) for m in months)
-def valid_month(month):
-    if(month):
-        short_month = month[:3].lower()
-        return month_abbrv.get(short_month)
-
-#print valid_month("january") 
-#=> "January"    
-#print valid_month("January") 
-#=> "January"
-#print valid_month("foo")
-#=> None
-#print valid_month("")
-#=> None
-```
-
-Validate the year:
-```python
-def valid_year(year):
-    if(year and year.isdigit()):
-        year = int(year)
-        if(year >= 1900 and year <= 2020):
-            return year
-
-#print valid_year('0') 
-#=> None    
-#print valid_year('-11') 
-#=> None
-#print valid_year('1950') 
-#=> 1950
-#print valid_year('2000') 
-#=> 2000
-```
-
-
-
-
 ## Google App Engine
 [](https://cloud.google.com/appengine/)
 
@@ -168,5 +85,102 @@ Referer: http://localhost:8080/
 Upgrade-Insecure-Requests: 1
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36
 X-Appengine-Country: ZZ
+```
+
+## Validation
+Validation for user input from a form (e.g., date - day, month, year). At first, the user makes
+a request for the form to the server - this is a `GET` request. Afterwards, the server responds
+with the form data. Finally, the user will make a `POST` request to the server with the data. 
+The server will run some validation functions. If the data is good, the server will say: "thanks". 
+However, if the data is bad, the server is going to respond with the form data again and the server
+will also include an error message telling user to reenter their values.
+1. verify the user's input
+2. on error, render form again
+3. include error message
+
+### Functions for Validation
+#### month
+```python
+months = ['January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December']
+
+month_abbrv = dict((m[:3].lower(),m) for m in months)
+def valid_month(month):
+    if(month):
+        short_month = month[:3].lower()
+        return month_abbrv.get(short_month)
+
+#print valid_month("january") 
+#=> "January"    
+#print valid_month("January") 
+#=> "January"
+#print valid_month("foo")
+#=> None
+#print valid_month("")
+#=> None
+```
+#### Day
+```python
+def valid_day(day):
+    if(day and day.isdigit()):
+        day = int(day)
+        if(day >= 1 and day <= 31):
+            return day
+
+#print valid_day('0') 
+# => None    
+#print valid_day('1') 
+# => 1
+#print valid_day('15') 
+# => 15
+#print valid_day('500') 
+# => None
+```
+#### Year
+```python
+def valid_year(year):
+    if(year and year.isdigit()):
+        year = int(year)
+        if(year >= 1900 and year <= 2020):
+            return year
+
+#print valid_year('0') 
+#=> None    
+#print valid_year('-11') 
+#=> None
+#print valid_year('1950') 
+#=> 1950
+#print valid_year('2000') 
+#=> 2000
+```
+
+### Form Handling
+```python
+class MainPage(webapp2.RequestHandler):
+    def get(self):
+        self.response.out.write(form) # display form on screen
+    def post(self):
+        user_day = valid_day(self.request.get('day')) # retrieve value from field day
+        user_month = valid_month(self.request.get('month')) # retrieve value from field month
+        user_year = valid_year(self.request.get('year')) # retrieve value from field year
+
+        if not (user_day and user_month and user_year):
+            self.response.out.write(form) # display form is values are not valid
+        else:
+            # if values of the form are valid display message
+            self.response.out.write("Thanks! That's a totally valid date!")
+
+app = webapp2.WSGIApplication([('/', MainPage)], 
+                                debug=True)
 ```
 
