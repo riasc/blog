@@ -58,7 +58,7 @@ app = webapp2.WSGIApplication([('/', MainPage)], debug=True)
 
 In the section on the bottom, an URL in this case `/` is mapped to a handler called MainPage, 
 that in turn is defined in the class MainPage. It inherits from `webapp2.RequestHandler`, 
-which is the generic request handler from Google. The class is a function valled `get`, 
+which is the generic request handler from Google. The class is a function called `get`, 
 which takes a parameter called self. In this example `get` implements the method `GET`. 
 Similarly, `post` implements the method `POST`.  This function does two things. 
 First, it takes `self.response`, which is the global
@@ -87,6 +87,25 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (
 X-Appengine-Country: ZZ
 ```
 
+### Forms with Google App Engine
+
+```python
+import webapp2
+form="""
+<form action="http://www.google.com/search">
+	<input name="q">
+	<input type="submit">
+</form>
+"""
+
+class MainPage(webapp2.RequestHandler):
+	def get(self);
+		self.response.out.write(form)
+
+app = webapp2.WSGIApplication([('/', MainPage)], debug=True)
+
+```
+
 ## Validation
 Validation for user input from a form (e.g., date - day, month, year). At first, the user makes
 a request for the form to the server - this is a `GET` request. Afterwards, the server responds
@@ -99,7 +118,7 @@ will also include an error message telling user to reenter their values.
 3. include error message
 
 ### Functions for Validation
-#### month
+#### Month
 ```python
 months = ['January',
           'February',
@@ -129,6 +148,7 @@ def valid_month(month):
 #print valid_month("")
 #=> None
 ```
+
 #### Day
 ```python
 def valid_day(day):
@@ -146,6 +166,7 @@ def valid_day(day):
 #print valid_day('500') 
 # => None
 ```
+
 #### Year
 ```python
 def valid_year(year):
@@ -164,7 +185,37 @@ def valid_year(year):
 #=> 2000
 ```
 
-### Form Handling
+### Handling of the Request Data
+The request handler instance can access the request data using its request property. This is initialized 
+to a populated WebOb Request object by the application. The request object provides a `get()` method that 
+returns values for arguments parsed from the query and from POST data. The method takes the argument name 
+as its first parameter. 
+
+```python
+class MyHandler(webapp.RequestHandler):
+    def post(self):
+        name = self.request.get("name")
+```
+By default, `get()` returns the empty string ('') if the requested argument is not in the request. 
+If the parameter default_value is specified, `get()` returns the value of that parameter instead of 
+the empty string if the argument is not present.
+If the argument appears more than once in a request, `get()` returns the first occurrence. 
+To get all occurrences of an argument as a possibly empty list, use `get_all()`.
+
+```python
+# <input name="name" type="text" />
+name = self.request.get("name")
+
+# <input name="subscribe" type="checkbox" value="yes" />
+subscribe_to_newsletter = self.request.get("subscribe", default_value="no")
+
+# <select name="favorite_foods" multiple="true">...</select>
+favorite_foods = self.request.get_all("favorite_foods")
+for food in favorite_foods:
+  # ...<Paste>
+```
+
+
 ```python
 class MainPage(webapp2.RequestHandler):
     def get(self):
@@ -173,14 +224,14 @@ class MainPage(webapp2.RequestHandler):
         user_day = valid_day(self.request.get('day')) # retrieve value from field day
         user_month = valid_month(self.request.get('month')) # retrieve value from field month
         user_year = valid_year(self.request.get('year')) # retrieve value from field year
-
-        if not (user_day and user_month and user_year):
-            self.response.out.write(form) # display form is values are not valid
+				
+				# display form (again) if values are not valid
+        if not (user_day and user_month and user_year): 
+            self.response.out.write(form)
         else:
             # if values of the form are valid display message
             self.response.out.write("Thanks! That's a totally valid date!")
 
-app = webapp2.WSGIApplication([('/', MainPage)], 
-                                debug=True)
+app = webapp2.WSGIApplication([('/', MainPage)], debug=True)
 ```
 
