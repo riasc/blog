@@ -88,9 +88,9 @@ X-Appengine-Country: ZZ
 ```
 
 ### Forms with Google App Engine
-
 ```python
 import webapp2
+
 form="""
 <form action="http://www.google.com/search">
 	<input name="q">
@@ -101,93 +101,25 @@ form="""
 class MainPage(webapp2.RequestHandler):
 	def get(self);
 		self.response.out.write(form)
-
 app = webapp2.WSGIApplication([('/', MainPage)], debug=True)
 
 ```
 
 ## Validation
-Validation for user input from a form (e.g., date - day, month, year). At first, the user makes
+Validation for user input from a form (e.g., date - month, day, year). At first, the user makes
 a request for the form to the server - this is a `GET` request. Afterwards, the server responds
 with the form data. Finally, the user will make a `POST` request to the server with the data. 
 The server will run some validation functions. If the data is good, the server will say: "thanks". 
 However, if the data is bad, the server is going to respond with the form data again and the server
 will also include an error message telling user to reenter their values.
+
 1. verify the user's input
 2. on error, render form again
 3. include error message
 
-### Functions for Validation
-#### Month
-```python
-months = ['January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July',
-          'August',
-          'September',
-          'October',
-          'November',
-          'December']
-
-month_abbrv = dict((m[:3].lower(),m) for m in months)
-def valid_month(month):
-    if(month):
-        short_month = month[:3].lower()
-        return month_abbrv.get(short_month)
-
-#print valid_month("january") 
-#=> "January"    
-#print valid_month("January") 
-#=> "January"
-#print valid_month("foo")
-#=> None
-#print valid_month("")
-#=> None
-```
-
-#### Day
-```python
-def valid_day(day):
-    if(day and day.isdigit()):
-        day = int(day)
-        if(day >= 1 and day <= 31):
-            return day
-
-#print valid_day('0') 
-# => None    
-#print valid_day('1') 
-# => 1
-#print valid_day('15') 
-# => 15
-#print valid_day('500') 
-# => None
-```
-
-#### Year
-```python
-def valid_year(year):
-    if(year and year.isdigit()):
-        year = int(year)
-        if(year >= 1900 and year <= 2020):
-            return year
-
-#print valid_year('0') 
-#=> None    
-#print valid_year('-11') 
-#=> None
-#print valid_year('1950') 
-#=> 1950
-#print valid_year('2000') 
-#=> 2000
-```
-
 ### Handling of the Request Data
 The request handler instance can access the request data using its request property. This is initialized 
-to a populated WebOb Request object by the application. The request object provides a `get()` method that 
+to a populated Request object by the application. The request object provides a `get()` method that 
 returns values for arguments parsed from the query and from POST data. The method takes the argument name 
 as its first parameter. 
 
@@ -196,11 +128,11 @@ class MyHandler(webapp.RequestHandler):
     def post(self):
         name = self.request.get("name")
 ```
-By default, `get()` returns the empty string ('') if the requested argument is not in the request. 
-If the parameter default_value is specified, `get()` returns the value of that parameter instead of 
-the empty string if the argument is not present.
-If the argument appears more than once in a request, `get()` returns the first occurrence. 
-To get all occurrences of an argument as a possibly empty list, use `get_all()`.
+By default, `get()` returns the empty string `('')` if the requested argument is not in the request. 
+If the parameter `default_value` is specified, `get()` returns the value of that parameter instead of 
+the empty string if the argument is not present. If the argument appears more than once in a request, 
+`get()` returns the first occurrence. To get all occurrences of an argument as a possibly empty list, 
+use `get_all()`.
 
 ```python
 # <input name="name" type="text" />
@@ -215,23 +147,17 @@ for food in favorite_foods:
   # ...<Paste>
 ```
 
+## String Substitution
+A simple string with a little bit of html `"<b> some bold text </b>"` can be written 
+as `"<b> %s </b>" %VARIABLE` in which the content of `VARIABLE` will be substitute for `%s`. 
 
 ```python
-class MainPage(webapp2.RequestHandler):
-    def get(self):
-        self.response.out.write(form) # display form on screen
-    def post(self):
-        user_day = valid_day(self.request.get('day')) # retrieve value from field day
-        user_month = valid_month(self.request.get('month')) # retrieve value from field month
-        user_year = valid_year(self.request.get('year')) # retrieve value from field year
-				
-				# display form (again) if values are not valid
-        if not (user_day and user_month and user_year): 
-            self.response.out.write(form)
-        else:
-            # if values of the form are valid display message
-            self.response.out.write("Thanks! That's a totally valid date!")
+given_string = "I think %s is a perfectly normal thing to do in public."
+def sub1(s):
+    return given_string %s
 
-app = webapp2.WSGIApplication([('/', MainPage)], debug=True)
+#print sub1("running") 
+# => "I think running is a perfectly normal thing to do in public."    
+#print sub1("sleeping") 
+# => "I think sleeping is a perfectly normal thing to do in public."
 ```
-
