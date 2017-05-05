@@ -148,9 +148,8 @@ for food in favorite_foods:
 ```
 
 ## String Substitution
-A simple string with a little bit of html `"<b> some bold text </b>"` can be written 
+Python allows string substitution. A simple string with a little bit of html `"<b> some bold text </b>"` can be written 
 as `"<b> %s </b>" %VARIABLE` in which the content of `VARIABLE` will be substitute for `%s`. 
-
 ```python
 given_string = "I think %s is a perfectly normal thing to do in public."
 def sub1(s):
@@ -161,3 +160,27 @@ def sub1(s):
 #print sub1("sleeping") 
 # => "I think sleeping is a perfectly normal thing to do in public."
 ```
+Likewise, multiple variables can be substituted into a string.
+```python
+given_string2 = "I think %s and %s are perfectly normal things to do in public."
+def sub2(s1, s2):
+    return given_string2 %(s1,s2)
+
+#print sub2("running", "sleeping") 
+# => "I think running and sleeping are perfectly normal things to do in public."
+#print sub2("sleeping", "running") 
+# => "I think sleeping and running are perfectly normal things to do in public."
+```
+Furthermore, the same variable can be substituted multiple times with the synyax:
+`"text %(NAME)s text" % {"NAME":value }`. Instead of including just variables at the 
+end, a dictionary can be included that maps name to value and `%(NAME)s` can appear 
+in the string multiple times and there can be multiple names.
+
+given_string2 = "I'm %(nickname)s. My real name is %(name)s, but my friends call me %(nickname)s."
+def sub_m(name, nickname):
+    return given_string2 % {"name": name,"nickname": nickname}
+
+#print sub_m("Mike", "Goose") 
+# => "I'm Goose. My real name is Mike, but my friends call me Goose."
+
+
