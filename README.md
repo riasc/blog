@@ -105,19 +105,6 @@ app = webapp2.WSGIApplication([('/', MainPage)], debug=True)
 
 ```
 
-## Validation
-<a href="validation"></a>
-Validation for user input from a form (e.g., date - month, day, year). At first, the user makes
-a request for the form to the server - this is a `GET` request. Afterwards, the server responds
-with the form data. Finally, the user will make a `POST` request to the server with the data. 
-The server will run some validation functions. If the data is good, the server will say: "thanks". 
-However, if the data is bad, the server is going to respond with the form data again and the server
-will also include an error message telling user to reenter their values.
-
-1. verify the user's input
-2. on error, render form again
-3. include error message
-
 ### Handling of the Request Data
 The request handler instance can access the request data using its request property. This is initialized 
 to a populated Request object by the application. The request object provides a `get()` method that 
@@ -148,7 +135,21 @@ for food in favorite_foods:
   # ...<Paste>
 ```
 
-## String Substitution
+## Validation, Substitution and Redirection
+### Validation
+<a href="validation"></a>
+Validation for user input from a form (e.g., date - month, day, year). At first, the user makes
+a request for the form to the server - this is a `GET` request. Afterwards, the server responds
+with the form as html. Finally, the user will make a `POST` request to the server with the data. 
+The server will run some validation functions. If the data is valid the server will return a success
+html.
+
+1. verify the user's input
+2. on error, render form again
+3. include error message
+
+
+### String Substitution
 Python allows string substitution. A simple string with a little bit of html `"<b> some bold text </b>"` can be written 
 as `"<b> %s </b>" %VARIABLE` in which the content of `VARIABLE` will be substitute for `%s`. 
 ```python
@@ -185,8 +186,13 @@ def sub_m(name, nickname):
 # => "I'm Goose. My real name is Mike, but my friends call me Goose."
 ```
 
-## Redirection
-Instead of rendering the results in a `POST` (see [validation](#validation) 
-the data is sent to another page. Originally, the user makes a `GET` request 
-for the form to the sever and the server responds with the form html. 
+### Redirection
+When the html of a successful request is being rendered (see [validation](#validation))
+it can't be shared (e.g., link) or reloaded (form needs to be resubmited). Instead of
+returning the (success) html a redirect to a different URL allows the user to request
+the (success) html (via `GET`) to which the server responds accordingly.
+
+A simple example of validation, string substitution and redirection can be found in the [play folder](./play).
+
+## Templates
 
