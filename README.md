@@ -106,6 +106,7 @@ app = webapp2.WSGIApplication([('/', MainPage)], debug=True)
 ```
 
 ## Validation
+<a href="validation"></a>
 Validation for user input from a form (e.g., date - month, day, year). At first, the user makes
 a request for the form to the server - this is a `GET` request. Afterwards, the server responds
 with the form data. Finally, the user will make a `POST` request to the server with the data. 
@@ -171,16 +172,21 @@ def sub2(s1, s2):
 #print sub2("sleeping", "running") 
 # => "I think sleeping and running are perfectly normal things to do in public."
 ```
-Furthermore, the same variable can be substituted multiple times with the synyax:
-`"text %(NAME)s text" % {"NAME":value }`. Instead of including just variables at the 
+Furthermore, the same variable can be substituted multiple times with `
+`"text %(NAME)s text" %{ "NAME":value }`. Instead of including just variables at the 
 end, a dictionary can be included that maps name to value and `%(NAME)s` can appear 
 in the string multiple times and there can be multiple names.
-
+```python
 given_string2 = "I'm %(nickname)s. My real name is %(name)s, but my friends call me %(nickname)s."
 def sub_m(name, nickname):
     return given_string2 % {"name": name,"nickname": nickname}
 
 #print sub_m("Mike", "Goose") 
 # => "I'm Goose. My real name is Mike, but my friends call me Goose."
+```
 
+## Redirection
+Instead of rendering the results in a `POST` (see [validation](#validation) 
+the data is sent to another page. Originally, the user makes a `GET` request 
+for the form to the sever and the server responds with the form html. 
 
