@@ -191,8 +191,14 @@ When the html of a successful request is being rendered (see [validation](#valid
 it can't be shared (e.g., link) or reloaded (form needs to be resubmited). Instead of
 returning the (success) html a redirect to a different URL allows the user to request
 the (success) html (via `GET`) to which the server responds accordingly.
-
 A simple example of validation, string substitution and redirection can be found in the [play folder](./play).
 
 ## Templates
+[./templates/shoplist_notmpl](./templates/shoplist_notmpl) implements a shopping list with the concept introduced before.
+At first, `form_html` implements   
 
+
+
+
+
+A template library is a library to build complicated strings (html) - [jinja2](http://www.jinja.pocoo.org).   
