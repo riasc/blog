@@ -173,7 +173,7 @@ def sub2(s1, s2):
 #print sub2("sleeping", "running") 
 # => "I think sleeping and running are perfectly normal things to do in public."
 ```
-Furthermore, the same variable can be substituted multiple times with `
+Furthermore, the same variable can be substituted multiple times with 
 `"text %(NAME)s text" %{ "NAME":value }`. Instead of including just variables at the 
 end, a dictionary can be included that maps name to value and `%(NAME)s` can appear 
 in the string multiple times and there can be multiple names.
@@ -195,10 +195,6 @@ A simple example of validation, string substitution and redirection can be found
 
 ## Templates
 [./templates/shoplist_notmpl](./templates/shoplist_notmpl) implements a shopping list with the concept introduced before.
-At first, `form_html` implements   
+However, this approach has no syntax highlighting for the forms and is error prone as well as hard to maintain. Using
+templates can resolve this. A template library is a library to build complicated strings (html) - [jinja2](http://www.jinja.pocoo.org).   
 
-
-
-
-
-A template library is a library to build complicated strings (html) - [jinja2](http://www.jinja.pocoo.org).   
