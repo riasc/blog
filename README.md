@@ -196,5 +196,21 @@ A simple example of validation, string substitution and redirection can be found
 ## Templates
 [./templates/shoplist_notmpl](./templates/shoplist_notmpl) implements a shopping list with the concept introduced before.
 However, this approach has no syntax highlighting for the forms and is error prone as well as hard to maintain. Using
-templates can resolve this. A template library is a library to build complicated strings (html) - [jinja2](http://www.jinja.pocoo.org).   
+templates can resolve this. A template library is a library to build complicated strings (html) - 
+[jinja2](http://www.jinja.pocoo.org). Variable substitution in jinja2 works with just double curly braces 
+`{{ variable }}`. Basically, the curly braces mean print. It is the same as typing the print statement in the 
+middle of the code. Similary, there is the statement syntax.
+```html
+{% statement %}
+output
+{% statement end %}
+```
+For example, an if statement looks like this:
+```html
+{% if name == "riasc" %}
+  Hello, riasc!
+{% else %}
+  Who are you?
+{% end if %}
+```
 
