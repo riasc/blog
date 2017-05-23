@@ -199,18 +199,35 @@ However, this approach has no syntax highlighting for the forms and is error pro
 templates can resolve this. A template library is a library to build complicated strings (html) - 
 [jinja2](http://www.jinja.pocoo.org). Variable substitution in jinja2 works with just double curly braces 
 `{{ variable }}`. Basically, the curly braces mean print. It is the same as typing the print statement in the 
-middle of the code. Similary, there is the statement syntax.
-```html
+middle of the code. In a similar fashon, statements can be written insides curly brackets and percent signs. 
+```python
 {% statement %}
 output
 {% statement end %}
 ```
-For example, an if statement looks like this:
-```html
+An `if`-statement would look like the following. 
+Note: statement need to be ended, because there are no whitespaces or indentation to end the statements.
+```python
 {% if name == "riasc" %}
   Hello, riasc!
 {% else %}
   Who are you?
-{% end if %}
+{% endif %}
+```
+### FizzBuzz
+Implementation of a FizzBuzz template that when provided with the variable n prints `FizzBuzz` up to n.
+If `n` is divisible by 3 print `Fizz`. If `n` is divisible by 5 print `Buzz`. If `n` is divisible by
+3 and 5 print `FizzBuzz`. Otherwise print `n`. At first a new handlerclass is created.
+```python 
+class FizzBuzzHandler(Handler):
+    def get(self):
+        n = self.request.get('n',0)
+        n = n and int(n)
+        self.render('fizzbuzz.html', n = n)
+```
+FizzBuzzHandler is addressed via `/FizzBuzz` with 
+[fizzbuzz.html](./templates/shoplist_tmpl/templates/fizzbuzz.html) implementing the logic.
+```python 
+app = webapp2.WSGIApplication([('/', MainPage),('/FizzBuzz', FizzBuzzHandler)], debug=True)
 ```
 
